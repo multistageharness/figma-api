@@ -1,0 +1,129 @@
+{
+  "name": "@internal/figma-api",
+  "version": "1.0.0",
+  "description": "Comprehensive collection of Figma API clients and SDKs (TypeScript edition)",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./comments": {
+      "types": "./dist/comments.d.ts",
+      "import": "./dist/comments.js"
+    },
+    "./components": {
+      "types": "./dist/components.d.ts",
+      "import": "./dist/components.js"
+    },
+    "./dev-resources": {
+      "types": "./dist/dev-resources.d.ts",
+      "import": "./dist/dev-resources.js"
+    },
+    "./figma-fetch": {
+      "types": "./dist/figma-fetch.d.ts",
+      "import": "./dist/figma-fetch.js"
+    },
+    "./figma-fetch-file": {
+      "types": "./dist/figma-fetch-file.d.ts",
+      "import": "./dist/figma-fetch-file.js"
+    },
+    "./files": {
+      "types": "./dist/files.d.ts",
+      "import": "./dist/files.js"
+    },
+    "./find": {
+      "types": "./dist/find.d.ts",
+      "import": "./dist/find.js"
+    },
+    "./library-analytics": {
+      "types": "./dist/library-analytics.d.ts",
+      "import": "./dist/library-analytics.js"
+    },
+    "./projects": {
+      "types": "./dist/projects.d.ts",
+      "import": "./dist/projects.js"
+    },
+    "./variables": {
+      "types": "./dist/variables.d.ts",
+      "import": "./dist/variables.js"
+    },
+    "./webhooks": {
+      "types": "./dist/webhooks.d.ts",
+      "import": "./dist/webhooks.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "workspaces": [
+    "figma-fetch",
+    "figma-fetch-file",
+    "comments",
+    "components",
+    "dev-resources",
+    "files",
+    "find",
+    "library-analytics",
+    "projects",
+    "variables",
+    "webhooks"
+  ],
+  "scripts": {
+    "build": "npm run build:engine && npm run build --workspaces --if-present && npm run build:umbrella",
+    "build:engine": "E=../../../../figma-find/v100/packages/ts; [ ! -d \"$E\" ] || { [ -d \"$E/node_modules\" ] || npm install --prefix \"$E\" --no-audit --no-fund --registry=https://registry.npmjs.org/; npm run build --prefix \"$E\"; }",
+    "build:fetch": "npm run build --workspace=figma-fetch",
+    "build:umbrella": "rm -rf dist && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present && npm run test:umbrella",
+    "test:umbrella": "node --test tests/umbrella.test.mjs",
+    "test:integration": "node tests/integration/run.mjs",
+    "test:mutation": "node scripts/mutation.mjs",
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "format": "npm run format --workspaces --if-present",
+    "check": "npm run check --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present && rm -rf dist node_modules"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "keywords": [
+    "figma",
+    "api",
+    "sdk",
+    "client",
+    "monorepo",
+    "workspaces",
+    "typescript"
+  ],
+  "author": "thinkeloquent",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/figma/figma-api-module.git"
+  },
+  "dependencies": {
+    "@internal/figma-api-fetch": "file:./figma-fetch",
+    "@internal/figma-api-fetch-file": "file:./figma-fetch-file",
+    "@internal/figma-comments": "file:./comments",
+    "@internal/figma-components-api": "file:./components",
+    "@internal/figma-dev-resources": "file:./dev-resources",
+    "@internal/figma-files-api": "file:./files",
+    "@internal/figma-find-api": "file:./find",
+    "@internal/figma-library-analytics": "file:./library-analytics",
+    "@internal/figma-projects": "file:./projects",
+    "@internal/figma-variables-sdk": "file:./variables",
+    "@internal/figma-webhooks": "file:./webhooks"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.7",
+    "@stryker-mutator/core": "10.1.1",
+    "@stryker-mutator/jest-runner": "10.1.1",
+    "@types/node": "^20.0.0",
+    "macos-keychain-env": "github:multistageharness/macos-keychain-env#4e4523be44acfc64854ff6c9b99042de29b67aa3",
+    "typescript": "^5.0.0"
+  }
+}
