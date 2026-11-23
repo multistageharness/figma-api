@@ -10,14 +10,29 @@
  *   node scripts/mutation.mjs comments files  # just these
  *
  * Reports: reports/mutation/<pkg>.html (open in a browser) and <pkg>.json.
+ *
+ * Stryker is NOT a devDependency (its pinned minimatch carried an open
+ * advisory). This script is kept but skipped: when `@stryker-mutator/core` is
+ * not installed it prints a notice and exits 0. To run it for real, install
+ * the tooling on demand (not saved to package.json):
+ *
+ *   npm i --no-save @stryker-mutator/core @stryker-mutator/jest-runner
  */
 
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+if (!existsSync(join(root, "node_modules/@stryker-mutator/core"))) {
+  console.log(
+    "mutation testing skipped: @stryker-mutator/core is not installed " +
+      "(npm i --no-save @stryker-mutator/core @stryker-mutator/jest-runner to run it)",
+  );
+  process.exit(0);
+}
 
 // The config throws without MUTATE_PKG, so read the floor table by parsing it.
 const configText = readFileSync(join(root, "stryker.config.mjs"), "utf8");

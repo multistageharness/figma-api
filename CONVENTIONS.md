@@ -223,7 +223,12 @@ were wrong. StrykerJS changes `src/**/*.ts` in small ways (flips a condition, em
 string, drops a block), rebuilds `dist/`, and runs the package's own Jest suite. A mutant
 that no test kills marks an assertion that is missing.
 
+Stryker is not installed by default (its pinned `minimatch` carried an open advisory), so
+`make mutation` prints a skip notice and exits 0. Install it on demand first, without
+saving it to `package.json`:
+
 ```bash
+npm i --no-save @stryker-mutator/core @stryker-mutator/jest-runner
 make mutation                 # every package, ~5 minutes after a build
 make mutation PKG=comments    # one package
 ```
