@@ -54,6 +54,21 @@ export {
   setNodeTreeValidator,
   validateNodeTree,
 } from "./schemas/index.js";
+// Secret store: the token from the environment, else the macOS keychain through
+// the vendored macos-keychain-env (see docs/keychain-env.md)
+export type {
+  LoadSecretsOptions,
+  SecretsBackend,
+  SecretsInfo,
+} from "./secrets/index.js";
+export {
+  DEFAULT_KEYCHAIN_SERVICE,
+  describeSecrets,
+  KEYCHAIN_KEYS,
+  loadFigmaSecrets,
+  loadFigmaSecretsSync,
+  VENDORED_MODULE_RELATIVE,
+} from "./secrets/index.js";
 export type {
   FakeFigmaClientConfig,
   FakeRoute,

@@ -3,7 +3,10 @@
  * Provides status information and simple connectivity tests
  */
 
-import { FigmaApiClient } from "@internal/figma-api-fetch";
+import {
+  FigmaApiClient,
+  loadFigmaSecretsSync,
+} from "@internal/figma-api-fetch";
 import Fastify from "fastify";
 import { FigmaLibraryAnalyticsSDK } from "./index.js";
 
@@ -12,6 +15,9 @@ const fastify = Fastify({
 });
 
 const PORT = process.env.PORT || 3006;
+// Fill FIGMA_TOKEN from the macOS keychain when the environment has none
+// (vendored macos-keychain-env; docs/keychain-env.md). Values never print.
+loadFigmaSecretsSync();
 const FIGMA_TOKEN = process.env.FIGMA_TOKEN;
 
 // Health check endpoint

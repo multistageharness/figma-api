@@ -124,7 +124,6 @@
     "@stryker-mutator/core": "10.1.1",
     "@stryker-mutator/jest-runner": "10.1.1",
     "@types/node": "^20.0.0",
-    "macos-keychain-env": "github:multistageharness/macos-keychain-env#4e4523be44acfc64854ff6c9b99042de29b67aa3",
     "typescript": "^5.0.0"
   }
 }

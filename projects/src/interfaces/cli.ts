@@ -5,10 +5,15 @@
  * Provides command-line access to Figma Projects API functionality
  */
 
+import { loadFigmaSecretsSync } from "@internal/figma-api-fetch";
 import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";
 import FigmaProjectsSDK from "./sdk.js";
+
+// Fill FIGMA_TOKEN from the macOS keychain when the environment has none
+// (vendored macos-keychain-env; docs/keychain-env.md). Values never print.
+loadFigmaSecretsSync();
 
 const program = new Command();
 

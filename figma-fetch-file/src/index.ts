@@ -7,16 +7,23 @@
  * callback seam so disk writing stays with the consumer.
  */
 
-export type { RetryEvent } from "@internal/figma-api-fetch";
+export type {
+  RetryEvent,
+  SecretsBackend,
+  SecretsInfo,
+} from "@internal/figma-api-fetch";
 // SDK facade — re-exported so a consumer of the file-download domain (e.g. the
 // chunked downloader CLI) needs exactly one dependency. These are
 // `@internal/figma-api-fetch`'s canonical symbols, unchanged.
 export {
   AuthenticationError,
+  describeSecrets,
   FigmaApiClient,
   FigmaApiError,
   FigmaFetchError,
   isRetryableError,
+  loadFigmaSecrets,
+  loadFigmaSecretsSync,
   NativeFetchAdapter,
   NetworkError,
   NotFoundError,

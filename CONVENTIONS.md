@@ -203,9 +203,12 @@ with `make test-integration` (or `npm run build && npm run test:integration`):
 | Live | `live.test.mjs` | A token. Reads, plus create-then-delete writes, against the first key in `figma-test-manifest/figma.smoke.json` |
 
 `run.mjs` takes the token from `FIGMA_TOKEN` (or an alias), else from the macOS
-keychain via `macos-keychain-env` at `keychain://figma-api/FIGMA_TOKEN`. Store it once
-with `npx keychain-env set figma-api FIGMA_TOKEN` (hidden prompt) from this folder. With no token the live
-tier skips and prints what it would run. Live writes are labelled "safe to delete" and
+keychain through `loadFigmaSecrets()` — the same loader every CLI and health server in
+this workspace runs at startup (`@internal/figma-api-fetch`, `src/secrets/`), reading the
+item `figma-api` / `FIGMA_TOKEN` via the vendored `macos-keychain-env` (`make vendor`).
+Store it once with `make secret KEY=FIGMA_TOKEN` (hidden prompt) from this folder; the
+full setup and validation steps are in [`docs/keychain-env.md`](docs/keychain-env.md). With no
+token the live tier skips and prints what it would run. Live writes are labelled "safe to delete" and
 cleaned up in a `finally`. A 403 (Enterprise-only feature, missing scope) skips that
 test. `FIGMA_TEST_TEAM_ID` enables team tests, and `FIGMA_TEST_WEBHOOK_ENDPOINT`
 enables the webhook write.
