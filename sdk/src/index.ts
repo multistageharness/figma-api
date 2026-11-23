@@ -3,7 +3,7 @@
  *
  * Each package is re-exported under its own namespace, because their exports
  * overlap (most define their own `ValidationError`, `RateLimitError`, and so
- * on). This entry loads all eleven; import a subpath such as
+ * on). This entry loads all ten; import a subpath such as
  * `@internal/figma-sdk/files` to load one, or install that package on its own
  * (`@internal/figma-files-api`) — the way `lodash` relates to `lodash.get`.
  */
@@ -13,7 +13,6 @@ export * as devResources from "./dev-resources.js";
 export * as figmaFetch from "./figma-fetch.js";
 export * as figmaFetchFile from "./figma-fetch-file.js";
 export * as files from "./files.js";
-export * as find from "./find.js";
 export * as libraryAnalytics from "./library-analytics.js";
 export * as projects from "./projects.js";
 export * as variables from "./variables.js";

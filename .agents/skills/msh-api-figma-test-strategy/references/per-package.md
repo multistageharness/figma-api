@@ -96,20 +96,6 @@ Conventions used below:
 - **Notes:** reuse `ProxyTestHelper` (setup/teardown saves & restores
   `HTTP_PROXY`/`HTTP_PROXY_TOKEN` env) for anything proxy-related.
 
-## find (`@internal/figma-find-api`)
-
-- **Runner:** **`node --test tests/*.test.mjs`** — the workspace's one non-Jest package.
-  Do not convert it to Jest; do not use `@jest/globals` here.
-- **Layout:** `tests/` root — `cli.test.mjs` (glob is non-recursive: new files must sit
-  directly in `tests/`).
-- **Imports/pattern:** `import { test } from "node:test"`,
-  `assert from "node:assert/strict"`; smoke-tests the **built CLI** (`../lib/cli.js`) via
-  `execFile`, writing a fixture JSON to a `mkdtemp` tmpdir and asserting `--help`,
-  bad-subcommand, and `--input <fixture>` behavior. Offline by design.
-- **Notes:** deliberately thin — the engine is owned (and heavily tested) by
-  `figma-find`; only test what this package ships (the CLI binary reaching the
-  engine's grammar).
-
 ## library-analytics (`@internal/figma-library-analytics`)
 
 - **Runner:** `node --experimental-vm-modules ../node_modules/.bin/jest`

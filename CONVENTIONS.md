@@ -161,7 +161,7 @@ import { FigmaFilesSDK } from "@internal/figma-files-api"; // the package direct
 ```
 
 Packages are namespaced, never flattened, because their export names overlap. The
-umbrella is ESM-only because `find` is. Adding a workspace means adding a
+umbrella is ESM-only. Adding a workspace means adding a
 `src/<dir>.ts` re-export, a namespace in `src/index.ts`, an `exports` entry and a
 `dependencies` entry in `package.json`; `tests/umbrella.test.mjs` fails until the
 new workspace is covered.
@@ -180,7 +180,7 @@ import { FigmaFilesSDK } from "@internal/figma-sdk/files"; // one package
 import { FigmaFilesSDK } from "@internal/figma-files-api"; // the package directly
 ```
 
-Like the root umbrella it is ESM-only (`find` is). It also exports `PACKAGE_NAME`
+Like the root umbrella it is ESM-only. It also exports `PACKAGE_NAME`
 and `VERSION`, generated into `src/version.ts` from `package.json` by
 `scripts/gen-version.mjs` on every build. It builds last (`sdk` is the final
 `workspaces` entry) because it re-exports the siblings' built output, and its
@@ -235,8 +235,7 @@ make mutation PKG=comments    # one package
 
 Reports land in `reports/mutation/<pkg>.html` (gitignored). CLIs, health servers, testing
 rails and type-only modules are excluded, because unit tests don't cover them by design.
-`find` is excluded because it only re-exports `figma-find`, and `sdk` because it
-only re-exports the other workspaces.
+`sdk` is excluded because it only re-exports the other workspaces.
 
 Each package has a floor in `FLOORS` (first measured score, minus 1 for noise). A run that
 falls below it fails. When you add tests, raise the floor to the new score minus 1. Never

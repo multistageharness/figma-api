@@ -35,10 +35,6 @@
       "types": "./dist/files.d.ts",
       "import": "./dist/files.js"
     },
-    "./find": {
-      "types": "./dist/find.d.ts",
-      "import": "./dist/find.js"
-    },
     "./library-analytics": {
       "types": "./dist/library-analytics.d.ts",
       "import": "./dist/library-analytics.js"
@@ -64,7 +60,6 @@
     "components",
     "dev-resources",
     "files",
-    "find",
     "library-analytics",
     "projects",
     "variables",
@@ -72,8 +67,7 @@
     "sdk"
   ],
   "scripts": {
-    "build": "npm run build:engine && npm run build --workspaces --if-present && npm run build:umbrella",
-    "build:engine": "E=../../../../figma-find/v100/packages/ts; [ ! -d \"$E\" ] || { [ -d \"$E/node_modules\" ] || npm install --prefix \"$E\" --no-audit --no-fund --registry=https://registry.npmjs.org/; npm run build --prefix \"$E\"; }",
+    "build": "npm run build --workspaces --if-present && npm run build:umbrella",
     "build:fetch": "npm run build --workspace=figma-fetch",
     "build:umbrella": "rm -rf dist && tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit && npm run typecheck --workspaces --if-present",
@@ -113,7 +107,6 @@
     "@internal/figma-components-api": "file:./components",
     "@internal/figma-dev-resources": "file:./dev-resources",
     "@internal/figma-files-api": "file:./files",
-    "@internal/figma-find-api": "file:./find",
     "@internal/figma-library-analytics": "file:./library-analytics",
     "@internal/figma-projects": "file:./projects",
     "@internal/figma-variables-sdk": "file:./variables",

@@ -2,12 +2,12 @@
 ## @internal/figma-api — workspace umbrella Makefile
 ##
 ## Aggregate entry point for the TypeScript workspace packages declared in
-## package.json `workspaces` (12 today, `sdk` last). Tests are plain-ESM suites that import
+## package.json `workspaces` (11 today, `sdk` last). Tests are plain-ESM suites that import
 ## each package's BUILT output (see jest.base.config.mjs), so `make test`
 ## always builds every workspace first — a red run is a real test failure,
 ## never build staleness. Coverage tracks the workspace list; adding a package
-## to `workspaces` needs no Makefile edit. `make build` also builds the sibling
-## figma-find engine first and the umbrella package last. `make install` pins the public
+## to `workspaces` needs no Makefile edit. `make build` builds the umbrella package
+## last. `make install` pins the public
 ## registry (REGISTRY knob) because the machine's default npm registry may be
 ## an unreachable local Verdaccio.
 ##

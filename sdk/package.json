@@ -34,10 +34,6 @@
       "types": "./dist/files.d.ts",
       "import": "./dist/files.js"
     },
-    "./find": {
-      "types": "./dist/find.d.ts",
-      "import": "./dist/find.js"
-    },
     "./library-analytics": {
       "types": "./dist/library-analytics.d.ts",
       "import": "./dist/library-analytics.js"
@@ -95,7 +91,6 @@
     "@internal/figma-components-api": "^1.0.0",
     "@internal/figma-dev-resources": "^1.0.0",
     "@internal/figma-files-api": "^1.0.0",
-    "@internal/figma-find-api": "^1.0.0",
     "@internal/figma-library-analytics": "^1.0.0",
     "@internal/figma-projects": "^1.0.0",
     "@internal/figma-variables-sdk": "^1.0.0",

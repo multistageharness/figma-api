@@ -28,7 +28,6 @@ import FigmaCommentsSDK from "@internal/figma-comments";
 | `./figma-fetch` | `figmaFetch` | `@internal/figma-api-fetch` |
 | `./figma-fetch-file` | `figmaFetchFile` | `@internal/figma-api-fetch-file` |
 | `./files` | `files` | `@internal/figma-files-api` |
-| `./find` | `find` | `@internal/figma-find-api` |
 | `./library-analytics` | `libraryAnalytics` | `@internal/figma-library-analytics` |
 | `./projects` | `projects` | `@internal/figma-projects` |
 | `./variables` | `variables` | `@internal/figma-variables-sdk` |
@@ -44,9 +43,8 @@ Namespaces are camelCased folder names. Subpaths re-export the package's
 - **Namespaced, never flattened.** Most packages define their own
   `ValidationError`, `RateLimitError`, and so on. `comments.ValidationError` and
   `files.ValidationError` are different classes; catch through the namespace.
-- **ESM only.** `@internal/figma-find-api` ships ESM only, so the umbrella does
-  too. `require("@internal/figma-sdk")` is not supported; every individual
-  package except `find` still ships a CommonJS build of its own.
+- **ESM only.** `require("@internal/figma-sdk")` is not supported; every
+  individual package still ships a CommonJS build of its own.
 - **Libraries only.** The CLIs (`figma-comments`, `figma-files`, …) come from
   installing the individual package.
 - **Relationship to `@internal/figma-api`.** The workspace root is a private
@@ -64,7 +62,7 @@ The umbrella re-exports the siblings' **built** output, so build the workspace
 first:
 
 ```sh
-make -C .. build        # figma-find engine, every workspace package, this one last
+make -C .. build        # every workspace package, this one last
 npm test                # the umbrella suite (Jest, against dist/)
 make test               # the two steps above in one go
 make examples           # run examples/ offline, no token needed
