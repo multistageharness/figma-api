@@ -43,7 +43,7 @@ const metadata = await sdk.getMetadata('your-file-key');
 
 ```bash
 # Set your API token
-export FIGMA_API_TOKEN="your-figma-token"
+export FIGMA_TOKEN="your-figma-token"
 
 # Get file data
 figma-files get --file-key YOUR_FILE_KEY
@@ -319,7 +319,7 @@ figma-files parse-url --url "https://www.figma.com/file/abc123/Design"
 ### Global Options
 
 ```bash
---token TOKEN           # Figma API token (or set FIGMA_API_TOKEN)
+--token TOKEN           # Figma API token (or set FIGMA_TOKEN)
 --verbose               # Verbose output
 --timeout MS            # Request timeout (default: 30000)
 --max-retries N         # Max retry attempts (default: 3)
@@ -331,8 +331,10 @@ figma-files parse-url --url "https://www.figma.com/file/abc123/Design"
 ### Environment Variables
 
 ```bash
-export FIGMA_API_TOKEN="your-figma-personal-access-token"
+export FIGMA_TOKEN="your-figma-personal-access-token"
 ```
+
+`FIGMA_API_TOKEN` is still read as a fallback.
 
 ### SDK Configuration
 

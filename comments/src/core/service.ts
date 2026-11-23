@@ -124,7 +124,7 @@ export class FigmaCommentsService {
         `/v1/files/${fileKey}/comments`,
         {
           method: "POST",
-          body: payload,
+          body: JSON.stringify(payload),
         },
       );
 
@@ -225,7 +225,7 @@ export class FigmaCommentsService {
         `/v1/files/${fileKey}/comments/${commentId}/reactions`,
         {
           method: "POST",
-          body: payload,
+          body: JSON.stringify(payload),
         },
       );
 
@@ -269,7 +269,7 @@ export class FigmaCommentsService {
         `/v1/files/${fileKey}/comments/${commentId}/reactions`,
         {
           method: "DELETE",
-          body: { emoji },
+          body: JSON.stringify({ emoji }),
         },
       );
 

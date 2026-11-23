@@ -207,7 +207,7 @@ The API supports four variable types:
 Set your access token via environment variable:
 
 ```bash
-export FIGMA_ACCESS_TOKEN="your-token-here"
+export FIGMA_TOKEN="your-token-here"
 ```
 
 Or pass it with each command:
@@ -235,7 +235,7 @@ figma-variables get <file-key> --access-token <token>
 
 ### Environment Variables
 
-- `FIGMA_ACCESS_TOKEN` - Your Figma access token
+- `FIGMA_TOKEN` - Your Figma access token (`FIGMA_ACCESS_TOKEN` is still read as a fallback)
 - `FIGMA_BASE_URL` - Custom API base URL (optional)
 
 ### Rate Limiting

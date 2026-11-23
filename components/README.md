@@ -48,7 +48,7 @@ const buttons = await sdk.searchComponents('team-id', 'button');
 npm install -g figma-components-api
 
 # Set your API token
-export FIGMA_API_TOKEN="your-token"
+export FIGMA_TOKEN="your-token"
 
 # List team components
 figma-components components list-team 123456
@@ -269,8 +269,10 @@ figma-components stats
 
 ### Environment Variables
 ```bash
-FIGMA_API_TOKEN=your-figma-personal-access-token
+FIGMA_TOKEN=your-figma-personal-access-token
 ```
+
+`FIGMA_API_TOKEN` is still read as a fallback.
 
 ### SDK Configuration
 ```javascript

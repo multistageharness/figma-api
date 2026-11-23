@@ -4,7 +4,10 @@
  * CLI interface for figma-library-analytics
  */
 
-import { loadFigmaSecretsSync } from "@internal/figma-api-fetch";
+import {
+  FigmaApiClient,
+  loadFigmaSecretsSync,
+} from "@internal/figma-api-fetch";
 import chalk from "chalk";
 import { Command } from "commander";
 import ora from "ora";
@@ -42,13 +45,16 @@ function getSDK(options: any): any {
     process.exit(1);
   }
 
-  return new FigmaLibraryAnalyticsSDK({
+  const logger = options.verbose
+    ? console
+    : { debug: () => {}, log: () => {}, error: console.error };
+  const fetcher = new FigmaApiClient({
     apiToken: token,
     baseUrl: options.baseUrl,
-    logger: options.verbose
-      ? console
-      : { debug: () => {}, log: () => {}, error: console.error },
+    logger,
   } as any);
+
+  return new FigmaLibraryAnalyticsSDK({ fetcher, logger });
 }
 
 // Helper to format output

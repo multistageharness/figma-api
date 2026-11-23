@@ -7,6 +7,19 @@
  * Service layer for Figma Library Analytics
  * Provides high-level business operations and data aggregation
  */
+/**
+ * Figma's analytics endpoints take snake_case query keys (`group_by`,
+ * `start_date`, `end_date`, `cursor`, `order`). Callers pass camelCase options;
+ * this maps each key so both spellings reach Figma correctly.
+ */
+function toQuery(options: Record<string, any>): Record<string, any> {
+  const query: Record<string, any> = {};
+  for (const [key, value] of Object.entries(options)) {
+    query[key.replace(/[A-Z]/g, (c) => `_${c.toLowerCase()}`)] = value;
+  }
+  return query;
+}
+
 export class FigmaLibraryAnalyticsService {
   fetcher: any;
   validator: any;
@@ -113,7 +126,7 @@ export class FigmaLibraryAnalyticsService {
     options: Record<string, any> = {},
   ): Promise<any> {
     const path = this.endpoints.componentActions.replace("{file_key}", fileKey);
-    return this.fetcher.get(path, options);
+    return this.fetcher.get(path, toQuery(options));
   }
 
   /**
@@ -127,7 +140,7 @@ export class FigmaLibraryAnalyticsService {
     options: Record<string, any> = {},
   ): Promise<any> {
     const path = this.endpoints.componentUsages.replace("{file_key}", fileKey);
-    return this.fetcher.get(path, options);
+    return this.fetcher.get(path, toQuery(options));
   }
 
   /**
@@ -141,7 +154,7 @@ export class FigmaLibraryAnalyticsService {
     options: Record<string, any> = {},
   ): Promise<any> {
     const path = this.endpoints.styleActions.replace("{file_key}", fileKey);
-    return this.fetcher.get(path, options);
+    return this.fetcher.get(path, toQuery(options));
   }
 
   /**
@@ -155,7 +168,7 @@ export class FigmaLibraryAnalyticsService {
     options: Record<string, any> = {},
   ): Promise<any> {
     const path = this.endpoints.styleUsages.replace("{file_key}", fileKey);
-    return this.fetcher.get(path, options);
+    return this.fetcher.get(path, toQuery(options));
   }
 
   /**
@@ -169,7 +182,7 @@ export class FigmaLibraryAnalyticsService {
     options: Record<string, any> = {},
   ): Promise<any> {
     const path = this.endpoints.variableActions.replace("{file_key}", fileKey);
-    return this.fetcher.get(path, options);
+    return this.fetcher.get(path, toQuery(options));
   }
 
   /**
@@ -183,7 +196,7 @@ export class FigmaLibraryAnalyticsService {
     options: Record<string, any> = {},
   ): Promise<any> {
     const path = this.endpoints.variableUsages.replace("{file_key}", fileKey);
-    return this.fetcher.get(path, options);
+    return this.fetcher.get(path, toQuery(options));
   }
 
   /**

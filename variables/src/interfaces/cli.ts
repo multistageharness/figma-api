@@ -26,7 +26,7 @@ program
   .version("1.0.0")
   .option(
     "-t, --access-token <token>",
-    "Figma access token (or set FIGMA_ACCESS_TOKEN env var)",
+    "Figma access token (or set FIGMA_TOKEN env var)",
   )
   .option("-b, --base-url <url>", "API base URL", "https://api.figma.com")
   .option("-v, --verbose", "Verbose output")
@@ -34,12 +34,15 @@ program
 
 // Helper to get SDK instance
 function getSDK(options: any): FigmaVariablesSDK {
-  const accessToken = options.accessToken || process.env.FIGMA_ACCESS_TOKEN;
+  const accessToken =
+    options.accessToken ||
+    process.env.FIGMA_TOKEN ||
+    process.env.FIGMA_ACCESS_TOKEN;
 
   if (!accessToken) {
     console.error(chalk.red("Error: Figma access token is required"));
     console.error(
-      "Set via --access-token flag or FIGMA_ACCESS_TOKEN environment variable",
+      "Set via --access-token flag or FIGMA_TOKEN environment variable",
     );
     console.error(
       chalk.yellow(

@@ -25,23 +25,19 @@ program
   .name("figma-components")
   .description("CLI for Figma Components, Component Sets, and Styles API")
   .version("1.0.0")
-  .option(
-    "-k, --api-key <key>",
-    "Figma API token (or set FIGMA_API_TOKEN env var)",
-  )
+  .option("-k, --api-key <key>", "Figma API token (or set FIGMA_TOKEN env var)")
   .option("-v, --verbose", "Verbose output")
   .option("-j, --json", "Output as JSON")
   .option("--pretty", "Pretty print JSON output");
 
 // Helper to get SDK instance
 function getSDK(options: any): FigmaComponentsSDK {
-  const apiToken = options.apiKey || process.env.FIGMA_API_TOKEN;
+  const apiToken =
+    options.apiKey || process.env.FIGMA_TOKEN || process.env.FIGMA_API_TOKEN;
 
   if (!apiToken) {
     console.error(chalk.red("Error: Figma API token is required"));
-    console.error(
-      "Set via --api-key flag or FIGMA_API_TOKEN environment variable",
-    );
+    console.error("Set via --api-key flag or FIGMA_TOKEN environment variable");
     process.exit(1);
   }
 

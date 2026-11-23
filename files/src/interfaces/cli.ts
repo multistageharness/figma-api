@@ -25,23 +25,19 @@ program
   .name("figma-files")
   .description("CLI for Figma Files API operations")
   .version("1.0.0")
-  .option(
-    "-t, --token <token>",
-    "Figma API token (or set FIGMA_API_TOKEN env var)",
-  )
+  .option("-t, --token <token>", "Figma API token (or set FIGMA_TOKEN env var)")
   .option("-v, --verbose", "Verbose output")
   .option("--timeout <ms>", "Request timeout in milliseconds", "30000")
   .option("--max-retries <n>", "Maximum retry attempts", "3");
 
 // Helper to get SDK instance
 function getSDK(options: any): FigmaFilesSDK {
-  const apiToken = options.token || process.env.FIGMA_API_TOKEN;
+  const apiToken =
+    options.token || process.env.FIGMA_TOKEN || process.env.FIGMA_API_TOKEN;
 
   if (!apiToken) {
     console.error(chalk.red("Error: Figma API token is required"));
-    console.error(
-      "Set via --token flag or FIGMA_API_TOKEN environment variable",
-    );
+    console.error("Set via --token flag or FIGMA_TOKEN environment variable");
     console.error(
       "Get your token at: https://www.figma.com/developers/api#access-tokens",
     );
