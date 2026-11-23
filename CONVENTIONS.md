@@ -5,7 +5,9 @@ Every package here mirrors the same-named package under `../mjs/<pkg>/`.
 
 The canonical, already-TypeScript reference package is **`figma-fetch`** — copied verbatim
 from `mjs/figma-fetch` (it was authored in TS). Use it as the exemplar for the build
-pipeline, tsconfig matrix, and `package.json` shape. Do **not** modify `figma-fetch`.
+pipeline, tsconfig matrix, and `package.json` shape. Do **not** modify `figma-fetch`'s logic
+or API; formatting and lint maintenance under `BIOME.md` (the `check` gate) applies to it like
+every other package.
 
 ## Source of types
 
@@ -74,6 +76,12 @@ The base `tsconfig.json` uses `"strict": true`; if a faithful port produces stri
 can only be fixed by changing behavior, relax with explicit local types or `any` rather than
 altering logic. As a last resort a package MAY set `"strict": false` in its own `tsconfig.json`,
 but prefer keeping strict and typing dynamic values as `any`/`Record<string, any>`.
+
+One permitted addition: a package whose source uses dynamic `import()` (today the
+`projects`, `variables` and `webhooks` CLIs) sets `"module": "ES2022"` in its base
+`tsconfig.json`. The base file has no `module` of its own, and TypeScript's implicit default
+rejects `import()`, so `typecheck` (which compiles the base config) fails on otherwise valid
+code. The ESM and CJS build configs set `module` themselves, so emitted output is unchanged.
 
 ## package.json — model on figma-fetch + the source package
 
@@ -158,6 +166,30 @@ umbrella is ESM-only because `find` is. Adding a workspace means adding a
 `dependencies` entry in `package.json`; `tests/umbrella.test.mjs` fails until the
 new workspace is covered.
 
+## Publishable umbrella: `sdk` (`@internal/figma-sdk`)
+
+`sdk/` is a workspace package with the same shape as the root umbrella — one
+namespace and one subpath per workspace package, no code of its own — but
+publishable: it is not `private`, it depends on the siblings by semver range
+(`^1.0.0`) rather than `file:` links, and it ships `dist/` + `README.md`. It is the
+`lodash` to each package's `lodash.get`:
+
+```ts
+import { files, comments } from "@internal/figma-sdk"; // all packages, as namespaces
+import { FigmaFilesSDK } from "@internal/figma-sdk/files"; // one package
+import { FigmaFilesSDK } from "@internal/figma-files-api"; // the package directly
+```
+
+Like the root umbrella it is ESM-only (`find` is). It also exports `PACKAGE_NAME`
+and `VERSION`, generated into `src/version.ts` from `package.json` by
+`scripts/gen-version.mjs` on every build. It builds last (`sdk` is the final
+`workspaces` entry) because it re-exports the siblings' built output, and its
+tests are Jest against `dist/` like every other package. Adding a workspace means,
+in `sdk/`: a `dependencies` entry at `^<version>`, an `exports` subpath,
+`src/<dir>.ts`, and a namespace line in `src/index.ts`;
+`sdk/tests/umbrella.test.mjs` fails until all four are present. The root
+`tests/umbrella.test.mjs` excludes `sdk` from the workspaces it expects to cover.
+
 ## Integration tests: `tests/integration/`
 
 Unit suites inject a mock fetcher, so they never see what goes on the wire. The
@@ -195,7 +227,8 @@ make mutation PKG=comments    # one package
 
 Reports land in `reports/mutation/<pkg>.html` (gitignored). CLIs, health servers, testing
 rails and type-only modules are excluded, because unit tests don't cover them by design.
-`find` is excluded because it only re-exports `figma-find`.
+`find` is excluded because it only re-exports `figma-find`, and `sdk` because it
+only re-exports the other workspaces.
 
 Each package has a floor in `FLOORS` (first measured score, minus 1 for noise). A run that
 falls below it fails. When you add tests, raise the floor to the new score minus 1. Never

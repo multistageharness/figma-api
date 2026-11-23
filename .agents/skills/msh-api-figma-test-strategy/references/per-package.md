@@ -1,6 +1,6 @@
 # Per-package test-folder knowledge — figma-api/v100/packages/ts
 
-Verified 2026-09-11 against the live tree. One entry per workspace package (the eleven
+Verified 2026-09-11 against the live tree. One entry per workspace package (the twelve
 declared in `packages/ts/package.json` `workspaces`). If an entry disagrees with the tree,
 the tree wins — fix the entry.
 
@@ -153,3 +153,18 @@ Conventions used below:
   a shared `silent` no-op logger object. Asserts v2 endpoints (`/v2/webhooks`),
   snake_case bodies, response unwrapping, local pagination, and HMAC signature
   verification with real `createHmac` digests.
+
+## sdk (`@internal/figma-sdk`)
+
+- **Runner:** `node --experimental-vm-modules ../node_modules/.bin/jest`
+- **Layout:** `tests/` root — `umbrella.test.mjs`.
+- **Imports:** the package by its own name (`@internal/figma-sdk`, built `dist/`) and
+  every sibling by package name, so each re-export can be compared for identity against
+  the original.
+- **Pattern:** no fetcher mock — the package has no logic. The suite reads `../package.json`
+  and the workspace `package.json` and asserts: one `dependencies` entry per workspace
+  package at `^<version>`, one `exports` subpath and one root namespace per package, and
+  that every export reachable through the umbrella **is** the sibling's export (`toBe`).
+- **Notes:** excluded from mutation testing (nothing to mutate). Adding a workspace package
+  fails this suite until the umbrella covers it. The root `tests/umbrella.test.mjs` filters
+  `sdk` out of the workspaces it expects to cover.

@@ -10,6 +10,7 @@ import type { FetchAdapter } from "../core/FetchAdapter.js";
 import {
   AuthenticationError,
   createErrorFromResponse,
+  FigmaFetchError,
 } from "../errors/index.js";
 import type {
   ClientStats,
@@ -23,7 +24,6 @@ import type {
   ResponseInterceptor,
   RetryEvent,
 } from "../types/index.js";
-import { FigmaFetchError } from "../errors/index.js";
 import { RateLimiter } from "../utils/RateLimiter.js";
 import { RequestCache } from "../utils/RequestCache.js";
 import { RetryHandler } from "../utils/RetryHandler.js";

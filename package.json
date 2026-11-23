@@ -68,7 +68,8 @@
     "library-analytics",
     "projects",
     "variables",
-    "webhooks"
+    "webhooks",
+    "sdk"
   ],
   "scripts": {
     "build": "npm run build:engine && npm run build --workspaces --if-present && npm run build:umbrella",

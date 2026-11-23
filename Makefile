@@ -2,7 +2,7 @@
 ## @internal/figma-api — workspace umbrella Makefile
 ##
 ## Aggregate entry point for the TypeScript workspace packages declared in
-## package.json `workspaces` (11 today). Tests are plain-ESM suites that import
+## package.json `workspaces` (12 today, `sdk` last). Tests are plain-ESM suites that import
 ## each package's BUILT output (see jest.base.config.mjs), so `make test`
 ## always builds every workspace first — a red run is a real test failure,
 ## never build staleness. Coverage tracks the workspace list; adding a package

@@ -4,7 +4,11 @@
  * `Retry-After` when the failed attempt carried one.
  */
 
-import { FigmaFetchError, isRetryableError, TimeoutError } from "../errors/index.js";
+import {
+  FigmaFetchError,
+  isRetryableError,
+  TimeoutError,
+} from "../errors/index.js";
 import type { RetryConfig, RetryContext } from "../types/index.js";
 
 /**
@@ -13,7 +17,10 @@ import type { RetryConfig, RetryContext } from "../types/index.js";
  * `maxRetries: 0` means "one attempt, no retries", `jitterFactor: 0` means
  * deterministic delays).
  */
-function resolveOption(value: number | undefined, defaultValue: number): number {
+function resolveOption(
+  value: number | undefined,
+  defaultValue: number,
+): number {
   const resolved = value ?? defaultValue;
   return resolved < 0 ? 0 : resolved;
 }

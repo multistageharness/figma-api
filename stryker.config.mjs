@@ -36,7 +36,7 @@ export const FLOORS = {
 if (!(pkg in FLOORS)) {
   throw new Error(
     `No mutation config for "${pkg}". Known: ${Object.keys(FLOORS).join(", ")}` +
-      " (find has no unit-tested source of its own: it re-exports figma-find).",
+      " (find and sdk have no unit-tested source of their own: they only re-export).",
   );
 }
 
